@@ -1,0 +1,16 @@
+{
+  "version": "1.8.1",
+  "installedAt": "2026-01-17T09:29:20.552Z",
+  "targetDir": "C:\\Projects\\paulx-co",
+  "ides": [
+    "claude",
+    "gemini"
+  ],
+  "components": {
+    "skills": true,
+    "agents": true,
+    "commands": true,
+    "templates": true,
+    "memory": true
+  }
+}
