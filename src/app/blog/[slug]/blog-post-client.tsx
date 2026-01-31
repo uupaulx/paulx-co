@@ -122,27 +122,23 @@ export function BlogPostClient({ post }: BlogPostClientProps) {
             </div>
 
             {/* Content */}
-            <div className="prose prose-lg dark:prose-invert max-w-none">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {getLocalizedContent(post.excerpt, locale)}
-              </p>
-
-              {/* Full content */}
-              <div className="mt-8">
-                {getLocalizedContent(post.content, locale) !== getLocalizedContent(post.excerpt, locale) ? (
-                  <div className="whitespace-pre-wrap">
-                    {getLocalizedContent(post.content, locale)}
-                  </div>
-                ) : (
-                  <div className="p-8 rounded-xl bg-muted/50 text-center">
-                    <p className="text-muted-foreground">
-                      {locale === "th"
-                        ? "เนื้อหาบทความเต็มจะเพิ่มในภายหลัง..."
-                        : "Full article content coming soon..."}
-                    </p>
-                  </div>
-                )}
-              </div>
+            <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-code:text-primary prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-blockquote:border-primary prose-blockquote:text-muted-foreground prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-li:text-muted-foreground">
+              {/* Full content - render as HTML */}
+              {getLocalizedContent(post.content, locale) ? (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: getLocalizedContent(post.content, locale),
+                  }}
+                />
+              ) : (
+                <div className="p-8 rounded-xl bg-muted/50 text-center">
+                  <p className="text-muted-foreground">
+                    {locale === "th"
+                      ? "เนื้อหาบทความเต็มจะเพิ่มในภายหลัง..."
+                      : "Full article content coming soon..."}
+                  </p>
+                </div>
+              )}
             </div>
 
             <Separator className="my-8" />
