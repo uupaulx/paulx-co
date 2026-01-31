@@ -6,6 +6,12 @@ import type { BlogPost } from "@/types/database";
 async function getAdminBlogPosts(): Promise<BlogPost[]> {
   const supabase = await createServerSupabaseClient();
 
+  // Handle case when Supabase is not configured
+  if (!supabase) {
+    console.warn("Supabase not configured - returning empty posts");
+    return [];
+  }
+
   const { data, error } = await supabase
     .from("blog_posts")
     .select("*")
@@ -21,6 +27,11 @@ async function getAdminBlogPosts(): Promise<BlogPost[]> {
 
 export default async function AdminDashboardPage() {
   const supabase = await createServerSupabaseClient();
+
+  // Handle case when Supabase is not configured
+  if (!supabase) {
+    redirect("/blog/admin/login");
+  }
 
   // Check if user is authenticated
   const {

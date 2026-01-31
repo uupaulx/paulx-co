@@ -6,13 +6,23 @@ import type { Database } from "@/types/database";
 /**
  * Create a Supabase client for Server Components that need authentication
  * Uses cookies() - makes route dynamic
+ * Returns null if environment variables are not configured
  */
 export async function createServerSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // Return null if env vars are not configured
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.warn("Supabase environment variables not configured");
+    return null;
+  }
+
   const cookieStore = await cookies();
 
   return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {

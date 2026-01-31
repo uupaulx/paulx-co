@@ -5,6 +5,11 @@ import { PostEditor } from "../post-editor";
 export default async function NewPostPage() {
   const supabase = await createServerSupabaseClient();
 
+  // Handle case when Supabase is not configured
+  if (!supabase) {
+    redirect("/blog/admin/login");
+  }
+
   // Check if user is authenticated
   const {
     data: { user },
