@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Clock, Share2 } from "lucide-react";
@@ -109,16 +108,13 @@ export function BlogPostClient({ post }: BlogPostClientProps) {
 
             <Separator className="mb-8" />
 
-            {/* Cover image */}
+            {/* Cover image - supports any domain */}
             <div className="relative h-64 md:h-80 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 mb-8 overflow-hidden">
               {post.coverImage ? (
-                <Image
+                <img
                   src={post.coverImage}
                   alt={getLocalizedContent(post.title, locale)}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 768px"
-                  priority
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">

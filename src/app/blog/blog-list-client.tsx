@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
@@ -61,15 +60,14 @@ export function BlogListClient({ posts }: BlogListClientProps) {
                       transition={{ duration: 0.3 }}
                     >
                       <Card className="h-full overflow-hidden border-border/50 hover:border-primary/50 transition-all group">
-                        {/* Cover Image */}
+                        {/* Cover Image - supports any domain */}
                         <div className="relative h-48 bg-gradient-to-br from-primary/20 to-accent/20 overflow-hidden">
                           {post.coverImage ? (
-                            <Image
+                            <img
                               src={post.coverImage}
                               alt={getLocalizedContent(post.title, locale)}
-                              fill
-                              className="object-cover group-hover:scale-105 transition-transform duration-300"
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              loading="lazy"
+                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             />
                           ) : (
                             <div className="absolute inset-0 flex items-center justify-center">
