@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     default: "Paul (Udomchai) | Data, Automation, AI & Vibe Coding Expert",
     template: "%s | PaulX",
   },
+  verification: {
+    google: "rPj0DdG7zIs2itoxQsf5ckTNSeb5dHm0dQ8wvBHmWa4",
+  },
   description:
     "Portfolio website of Paul (Udomchai) - 10+ years of experience in Data, Automation, AI, and Vibe Coding. Building intelligent solutions that transform businesses.",
   keywords: [

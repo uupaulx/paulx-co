@@ -39,18 +39,23 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   if (!post) {
     return generateSEO({
-      title: "Blog Post Not Found",
-      description: "The blog post you are looking for does not exist.",
+      title: "ไม่พบบทความ",
+      description: "ไม่พบบทความที่คุณกำลังมองหา",
       path: `/blog/${slug}`,
       noIndex: true,
     });
   }
 
+  // Use Thai for OG meta tags (primary audience is Thai)
+  // Include article metadata for better SEO
   return generateSEO({
-    title: post.title.en,
-    description: post.excerpt.en,
+    title: post.title.th,
+    description: post.excerpt.th,
     path: `/blog/${slug}`,
     image: post.coverImage || undefined,
+    type: "article",
+    publishedTime: post.publishedAt,
+    keywords: post.tags,
   });
 }
 
@@ -78,11 +83,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     }
   }
 
-  // Generate JSON-LD for blog post
+  // Generate JSON-LD for blog post (use Thai as primary)
   const blogSchema = post
     ? generateBlogPostSchema({
-        title: post.title.en,
-        description: post.excerpt.en,
+        title: post.title.th || post.title.en,
+        description: post.excerpt.th || post.excerpt.en,
         image: post.coverImage || siteConfig.ogImage,
         datePublished: post.publishedAt,
         slug: post.slug,

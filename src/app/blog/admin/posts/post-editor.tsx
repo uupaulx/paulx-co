@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getSupabaseClient } from "@/lib/supabase/client";
+import { revalidateBlogPages } from "../actions";
 import type { BlogPost } from "@/types/database";
 
 interface PostEditorProps {
@@ -135,6 +136,9 @@ export function PostEditor({ post, mode }: PostEditorProps) {
           return;
         }
       }
+
+      // Revalidate blog pages to clear ISR cache
+      await revalidateBlogPages(formData.slug);
 
       setSuccess(true);
       setTimeout(() => {

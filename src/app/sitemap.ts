@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/seo";
+import { getPublishedBlogPosts } from "@/lib/supabase";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url;
@@ -16,22 +17,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/blog`,
       lastModified: new Date(),
       changeFrequency: "daily",
-      priority: 0.8,
+      priority: 0.9,
     },
   ];
 
-  // Blog posts (mock data for now - can be replaced with Supabase query)
-  const blogSlugs = [
-    "introduction-to-vibe-coding",
-    "automation-saves-time",
-    "ai-customer-support",
-  ];
+  // Fetch blog posts from Supabase
+  const posts = await getPublishedBlogPosts();
 
-  const blogPages: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
-    url: `${baseUrl}/blog/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
+  const blogPages: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.publishedAt),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
   }));
 
   return [...staticPages, ...blogPages];

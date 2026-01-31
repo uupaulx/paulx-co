@@ -35,30 +35,43 @@ export function generateSEO({
   path = "",
   image,
   noIndex = false,
+  keywords,
+  publishedTime,
+  modifiedTime,
+  type = "website",
 }: {
   title?: string;
   description?: string;
   path?: string;
   image?: string;
   noIndex?: boolean;
+  keywords?: string[];
+  publishedTime?: string;
+  modifiedTime?: string;
+  type?: "website" | "article";
 }): Metadata {
   const url = `${siteConfig.url}${path}`;
   const ogImage = image || siteConfig.ogImage;
+  const allKeywords = keywords
+    ? [...keywords, ...siteConfig.keywords]
+    : siteConfig.keywords;
 
   return {
     title: title,
-    description: description || siteConfig.description.en,
+    description: description || siteConfig.description.th,
+    keywords: allKeywords,
+    authors: [{ name: siteConfig.author.name }],
     alternates: {
       canonical: url,
     },
     openGraph: {
-      type: "website",
+      type: type,
       locale: "th_TH",
       alternateLocale: "en_US",
       url: url,
       siteName: siteConfig.name,
       title: title || siteConfig.name,
-      description: description || siteConfig.description.en,
+      description: description || siteConfig.description.th,
       images: [
         {
           url: ogImage,
@@ -67,12 +80,20 @@ export function generateSEO({
           alt: title || siteConfig.name,
         },
       ],
+      ...(type === "article" && {
+        publishedTime: publishedTime,
+        modifiedTime: modifiedTime || publishedTime,
+        authors: [siteConfig.author.name],
+        section: "Technology",
+        tags: keywords,
+      }),
     },
     twitter: {
       card: "summary_large_image",
       title: title || siteConfig.name,
-      description: description || siteConfig.description.en,
+      description: description || siteConfig.description.th,
       images: [ogImage],
+      creator: "@paulx",
     },
     robots: noIndex
       ? { index: false, follow: false }
