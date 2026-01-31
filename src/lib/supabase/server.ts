@@ -1,7 +1,12 @@
 import { createServerClient } from "@supabase/ssr";
+import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import type { Database } from "@/types/database";
 
+/**
+ * Create a Supabase client for Server Components that need authentication
+ * Uses cookies() - makes route dynamic
+ */
 export async function createServerSupabaseClient() {
   const cookieStore = await cookies();
 
@@ -26,5 +31,17 @@ export async function createServerSupabaseClient() {
         },
       },
     }
+  );
+}
+
+/**
+ * Create a Supabase client for public data fetching (no auth required)
+ * Does NOT use cookies() - compatible with ISR/static generation
+ * Use this for fetching public blog posts, etc.
+ */
+export function createPublicSupabaseClient() {
+  return createClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 }

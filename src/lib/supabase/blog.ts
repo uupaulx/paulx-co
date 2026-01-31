@@ -1,4 +1,4 @@
-import { createServerSupabaseClient } from "./server";
+import { createPublicSupabaseClient } from "./server";
 import type { BlogPost } from "@/types/database";
 
 export interface BlogPostWithLocale {
@@ -33,7 +33,7 @@ function transformBlogPost(post: BlogPost): BlogPostWithLocale {
  * Caching is handled at page level via ISR (revalidate = 300)
  */
 export async function getPublishedBlogPosts(): Promise<BlogPostWithLocale[]> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = createPublicSupabaseClient();
 
   const { data, error } = await supabase
     .from("blog_posts")
@@ -56,7 +56,7 @@ export async function getPublishedBlogPosts(): Promise<BlogPostWithLocale[]> {
 export async function getBlogPostBySlug(
   slug: string
 ): Promise<BlogPostWithLocale | null> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = createPublicSupabaseClient();
 
   const { data, error } = await supabase
     .from("blog_posts")
@@ -80,7 +80,7 @@ export async function getBlogPostBySlug(
  * Get all blog slugs for static generation
  */
 export async function getAllBlogSlugs(): Promise<string[]> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = createPublicSupabaseClient();
 
   const { data, error } = await supabase
     .from("blog_posts")
