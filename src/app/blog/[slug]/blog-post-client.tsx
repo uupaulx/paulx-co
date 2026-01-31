@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Clock, Share2 } from "lucide-react";
@@ -108,17 +109,30 @@ export function BlogPostClient({ post }: BlogPostClientProps) {
 
             <Separator className="mb-8" />
 
-            {/* Cover image placeholder */}
-            <div className="relative h-64 md:h-80 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 mb-8 flex items-center justify-center">
-              <span className="text-6xl">
-                {post.tags[0] === "Vibe Coding"
-                  ? "💻"
-                  : post.tags[0] === "AI"
-                  ? "🤖"
-                  : post.tags[0] === "Automation"
-                  ? "⚡"
-                  : "📊"}
-              </span>
+            {/* Cover image */}
+            <div className="relative h-64 md:h-80 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 mb-8 overflow-hidden">
+              {post.coverImage ? (
+                <Image
+                  src={post.coverImage}
+                  alt={getLocalizedContent(post.title, locale)}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 768px"
+                  priority
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-6xl">
+                    {post.tags[0] === "Vibe Coding"
+                      ? "💻"
+                      : post.tags[0] === "AI"
+                      ? "🤖"
+                      : post.tags[0] === "Automation"
+                      ? "⚡"
+                      : "📊"}
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Content */}
