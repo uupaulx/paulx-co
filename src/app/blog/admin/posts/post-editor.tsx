@@ -17,6 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import {
   Select,
   SelectContent,
@@ -245,14 +246,11 @@ export function PostEditor({ post, mode }: PostEditorProps) {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="content_th">เนื้อหา (ไทย)</Label>
-                        <Textarea
-                          id="content_th"
-                          value={formData.content_th}
-                          onChange={(e) => handleChange("content_th", e.target.value)}
-                          placeholder="เนื้อหาบทความภาษาไทย"
-                          rows={15}
-                          className="font-mono text-sm"
+                        <Label>เนื้อหา (ไทย)</Label>
+                        <RichTextEditor
+                          content={formData.content_th}
+                          onChange={(value) => handleChange("content_th", value)}
+                          placeholder="เริ่มเขียนเนื้อหาภาษาไทย..."
                         />
                       </div>
                     </TabsContent>
@@ -278,14 +276,11 @@ export function PostEditor({ post, mode }: PostEditorProps) {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="content_en">Content (English)</Label>
-                        <Textarea
-                          id="content_en"
-                          value={formData.content_en}
-                          onChange={(e) => handleChange("content_en", e.target.value)}
-                          placeholder="Article content in English"
-                          rows={15}
-                          className="font-mono text-sm"
+                        <Label>Content (English)</Label>
+                        <RichTextEditor
+                          content={formData.content_en}
+                          onChange={(value) => handleChange("content_en", value)}
+                          placeholder="Start writing content in English..."
                         />
                       </div>
                     </TabsContent>

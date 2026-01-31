@@ -4,6 +4,9 @@ import { blogPosts as mockBlogPosts, type BlogPost as MockBlogPost } from "@/lib
 import { BlogListClient } from "./blog-list-client";
 import { generateSEO } from "@/lib/seo";
 
+// ISR: Revalidate blog list every 5 minutes
+export const revalidate = 300;
+
 export const metadata: Metadata = generateSEO({
   title: "Blog | บทความเกี่ยวกับ Data, AI & Automation",
   description: "บทความและ Case Studies เกี่ยวกับ Data Analytics, AI, Automation และ Vibe Coding จากประสบการณ์จริง",

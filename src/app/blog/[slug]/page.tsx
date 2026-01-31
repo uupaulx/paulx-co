@@ -4,6 +4,9 @@ import { getBlogPostBySlug as getMockBlogPost, type BlogPost as MockBlogPost } f
 import { BlogPostClient } from "./blog-post-client";
 import { generateSEO, generateBlogPostSchema, siteConfig } from "@/lib/seo";
 
+// ISR: Revalidate blog post every 5 minutes
+export const revalidate = 300;
+
 // Transform mock data to match BlogPostWithLocale format
 function transformMockPost(post: MockBlogPost): BlogPostWithLocale {
   return {

@@ -30,6 +30,7 @@ function transformBlogPost(post: BlogPost): BlogPostWithLocale {
 
 /**
  * Get all published blog posts
+ * Caching is handled at page level via ISR (revalidate = 300)
  */
 export async function getPublishedBlogPosts(): Promise<BlogPostWithLocale[]> {
   const supabase = await createServerSupabaseClient();
@@ -50,6 +51,7 @@ export async function getPublishedBlogPosts(): Promise<BlogPostWithLocale[]> {
 
 /**
  * Get a single blog post by slug
+ * Caching is handled at page level via ISR (revalidate = 300)
  */
 export async function getBlogPostBySlug(
   slug: string
@@ -64,7 +66,10 @@ export async function getBlogPostBySlug(
     .single();
 
   if (error || !data) {
-    console.error("Error fetching blog post:", error);
+    // Don't log error for not found posts
+    if (error?.code !== "PGRST116") {
+      console.error("Error fetching blog post:", error);
+    }
     return null;
   }
 
