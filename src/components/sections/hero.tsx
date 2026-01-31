@@ -105,7 +105,7 @@ export function HeroSection() {
               className="flex flex-wrap gap-4"
             >
               <Button asChild size="lg" className="group">
-                <Link href="#contact">
+                <Link href="/#contact">
                   <Mail className="h-4 w-4 mr-2" />
                   {t.hero.cta.contact}
                   <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -118,7 +118,7 @@ export function HeroSection() {
                 </Link>
               </Button>
               <Button asChild variant="ghost" size="lg">
-                <Link href="#portfolio">{t.hero.cta.portfolio}</Link>
+                <Link href="/#portfolio">{t.hero.cta.portfolio}</Link>
               </Button>
             </motion.div>
           </motion.div>

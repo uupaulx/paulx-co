@@ -31,19 +31,19 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Quick Links</h3>
             <nav className="flex flex-col gap-2">
               <Link
-                href="#about"
+                href="/#about"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 {t.nav.about}
               </Link>
               <Link
-                href="#portfolio"
+                href="/#portfolio"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 {t.nav.portfolio}
               </Link>
               <Link
-                href="#skills"
+                href="/#skills"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 {t.nav.skills}

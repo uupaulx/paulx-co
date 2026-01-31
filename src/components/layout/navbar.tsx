@@ -17,12 +17,12 @@ import { useLocale } from "@/providers/providers";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { href: "#about", labelKey: "about" },
-  { href: "#portfolio", labelKey: "portfolio" },
-  { href: "#skills", labelKey: "skills" },
+  { href: "/#about", labelKey: "about" },
+  { href: "/#portfolio", labelKey: "portfolio" },
+  { href: "/#skills", labelKey: "skills" },
   { href: "/blog", labelKey: "blog" },
   { href: "/resume", labelKey: "resume" },
-  { href: "#contact", labelKey: "contact" },
+  { href: "/#contact", labelKey: "contact" },
 ] as const;
 
 export function Navbar() {
@@ -131,7 +131,7 @@ export function Navbar() {
 
           {/* CTA Button */}
           <Button asChild size="sm" className="ml-2">
-            <Link href="#contact">{t.hero.cta.contact}</Link>
+            <Link href="/#contact">{t.hero.cta.contact}</Link>
           </Button>
         </div>
 
@@ -191,7 +191,7 @@ export function Navbar() {
                 </div>
 
                 <Button asChild className="mx-4 mt-4">
-                  <Link href="#contact" onClick={() => setIsOpen(false)}>
+                  <Link href="/#contact" onClick={() => setIsOpen(false)}>
                     {t.hero.cta.contact}
                   </Link>
                 </Button>
