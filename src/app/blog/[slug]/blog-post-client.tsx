@@ -122,7 +122,7 @@ export function BlogPostClient({ post }: BlogPostClientProps) {
             </div>
 
             {/* Content */}
-            <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-code:text-primary prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-blockquote:border-primary prose-blockquote:text-muted-foreground prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-li:text-muted-foreground">
+            <div className="prose prose-lg max-w-none">
               {/* Full content - render as HTML */}
               {getLocalizedContent(post.content, locale) ? (
                 <div
