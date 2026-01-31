@@ -35,18 +35,28 @@ function transformBlogPost(post: BlogPost): BlogPostWithLocale {
 export async function getPublishedBlogPosts(): Promise<BlogPostWithLocale[]> {
   const supabase = createPublicSupabaseClient();
 
-  const { data, error } = await supabase
-    .from("blog_posts")
-    .select("*")
-    .eq("status", "published")
-    .order("published_at", { ascending: false });
-
-  if (error) {
-    console.error("Error fetching blog posts:", error);
+  // Return empty array if Supabase is not configured (will fallback to mock data)
+  if (!supabase) {
     return [];
   }
 
-  return (data || []).map(transformBlogPost);
+  try {
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select("*")
+      .eq("status", "published")
+      .order("published_at", { ascending: false });
+
+    if (error) {
+      console.error("Error fetching blog posts:", error);
+      return [];
+    }
+
+    return (data || []).map(transformBlogPost);
+  } catch (err) {
+    console.error("Error connecting to Supabase:", err);
+    return [];
+  }
 }
 
 /**
@@ -58,22 +68,32 @@ export async function getBlogPostBySlug(
 ): Promise<BlogPostWithLocale | null> {
   const supabase = createPublicSupabaseClient();
 
-  const { data, error } = await supabase
-    .from("blog_posts")
-    .select("*")
-    .eq("slug", slug)
-    .eq("status", "published")
-    .single();
-
-  if (error || !data) {
-    // Don't log error for not found posts
-    if (error?.code !== "PGRST116") {
-      console.error("Error fetching blog post:", error);
-    }
+  // Return null if Supabase is not configured (will fallback to mock data)
+  if (!supabase) {
     return null;
   }
 
-  return transformBlogPost(data);
+  try {
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select("*")
+      .eq("slug", slug)
+      .eq("status", "published")
+      .single();
+
+    if (error || !data) {
+      // Don't log error for not found posts
+      if (error?.code !== "PGRST116") {
+        console.error("Error fetching blog post:", error);
+      }
+      return null;
+    }
+
+    return transformBlogPost(data);
+  } catch (err) {
+    console.error("Error connecting to Supabase:", err);
+    return null;
+  }
 }
 
 /**
@@ -82,15 +102,25 @@ export async function getBlogPostBySlug(
 export async function getAllBlogSlugs(): Promise<string[]> {
   const supabase = createPublicSupabaseClient();
 
-  const { data, error } = await supabase
-    .from("blog_posts")
-    .select("slug")
-    .eq("status", "published");
-
-  if (error) {
-    console.error("Error fetching blog slugs:", error);
+  // Return empty array if Supabase is not configured
+  if (!supabase) {
     return [];
   }
 
-  return (data || []).map((post) => post.slug);
+  try {
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select("slug")
+      .eq("status", "published");
+
+    if (error) {
+      console.error("Error fetching blog slugs:", error);
+      return [];
+    }
+
+    return (data || []).map((post) => post.slug);
+  } catch (err) {
+    console.error("Error connecting to Supabase:", err);
+    return [];
+  }
 }

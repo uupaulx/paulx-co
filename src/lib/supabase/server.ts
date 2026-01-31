@@ -38,10 +38,17 @@ export async function createServerSupabaseClient() {
  * Create a Supabase client for public data fetching (no auth required)
  * Does NOT use cookies() - compatible with ISR/static generation
  * Use this for fetching public blog posts, etc.
+ * Returns null if environment variables are not configured
  */
 export function createPublicSupabaseClient() {
-  return createClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // Return null if env vars are not configured
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.warn("Supabase environment variables not configured");
+    return null;
+  }
+
+  return createClient<Database>(supabaseUrl, supabaseAnonKey);
 }
