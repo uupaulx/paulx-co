@@ -1,13 +1,10 @@
-import { Navbar, Footer } from "@/components/layout";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-
 function BlogCardSkeleton() {
   return (
-    <Card className="h-full overflow-hidden border-border/50">
+    <div className="h-full overflow-hidden rounded-xl border border-border/50 bg-card">
       {/* Cover Image Skeleton */}
       <div className="relative h-48 bg-muted animate-pulse" />
 
-      <CardHeader className="pb-3">
+      <div className="p-6 pb-3">
         {/* Tags Skeleton */}
         <div className="flex gap-2 mb-3">
           <div className="h-5 w-16 bg-muted animate-pulse rounded-full" />
@@ -17,9 +14,9 @@ function BlogCardSkeleton() {
         {/* Title Skeleton */}
         <div className="h-6 w-full bg-muted animate-pulse rounded mb-2" />
         <div className="h-6 w-3/4 bg-muted animate-pulse rounded" />
-      </CardHeader>
+      </div>
 
-      <CardContent className="pt-0">
+      <div className="px-6 pb-6">
         {/* Excerpt Skeleton */}
         <div className="space-y-2 mb-4">
           <div className="h-4 w-full bg-muted animate-pulse rounded" />
@@ -35,32 +32,28 @@ function BlogCardSkeleton() {
           </div>
           <div className="h-4 w-4 bg-muted animate-pulse rounded" />
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
 export default function BlogLoading() {
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen pt-24 pb-16">
-        <div className="container mx-auto px-4">
-          {/* Header Skeleton */}
-          <div className="text-center mb-16">
-            <div className="h-12 w-48 bg-muted animate-pulse rounded mx-auto mb-4" />
-            <div className="h-6 w-96 max-w-full bg-muted animate-pulse rounded mx-auto" />
-          </div>
-
-          {/* Blog Posts Grid Skeleton */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <BlogCardSkeleton key={i} />
-            ))}
-          </div>
+    <div className="min-h-screen pt-24 pb-16">
+      <div className="container mx-auto px-4">
+        {/* Header Skeleton */}
+        <div className="text-center mb-16">
+          <div className="h-12 w-48 bg-muted animate-pulse rounded mx-auto mb-4" />
+          <div className="h-6 w-96 max-w-full bg-muted animate-pulse rounded mx-auto" />
         </div>
-      </main>
-      <Footer />
-    </>
+
+        {/* Blog Posts Grid Skeleton */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <BlogCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
